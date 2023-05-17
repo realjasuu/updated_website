@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 align="center">Make a Post</h1>
+<form method="POST" action="/create-post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="attachment" class="form-label">Attachment</label>
+        <input type="file" class="form-control" id="attachment" name="attachment">
+    </div>
+    <textarea name="text" id="text" class="form-control"></textarea>
+    <img id="previewImage" alt="Preview Image" class="img-fluid">
+    <br />
+    <div align="right">
+        <button type="submit" class="btn btn-lg btn-primary">Post</button>
+    </div>
+</form>
+<div align="left">
+    <a href="/home">
+        <button type="button" class="btn btn-lg btn-secondary">Back</button>
+    </a>
+</div>
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+{{ message }}
+<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% if attachment %}
+<div align="center">
+<h3>Attachment:</h3>
+<img src="{{ attachment }}" alt="Attachment Image" class="img-fluid">
+</div>
+{% endif %}
+{% endblock %}
